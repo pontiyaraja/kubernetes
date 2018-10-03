@@ -25,6 +25,7 @@ go_library(
         "kubelet.go",
         "kubelet_etc_hosts.go",
         "lifecycle_hook.go",
+        "mirror_pod_test.go",
         "networking.go",
         "node_lease.go",
         "pods.go",

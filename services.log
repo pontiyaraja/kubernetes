@@ -1,0 +1,35 @@
+[1mSTEP[0m: Enabling support for Kubelet Plugins Watcher
+[1mSTEP[0m: Enabling support for Kubelet Plugins Watcher
+Oct  1 19:37:56.248: INFO: Parsing ds from https://raw.githubusercontent.com/kubernetes/kubernetes/master/cluster/addons/device-plugins/nvidia-gpu/daemonset.yaml
+W1001 19:37:57.101111   22472 test_context.go:389] Unable to find in-cluster config, using default host : http://127.0.0.1:8080
+I1001 19:37:57.101204   22472 internal_services.go:55] Starting e2e services...
+I1001 19:37:57.101214   22472 internal_services.go:111] Starting etcd
+2018-10-01 19:37:57.103721 I | etcdserver: name = etcd
+2018-10-01 19:37:57.103747 I | etcdserver: data dir = etcd144663324
+2018-10-01 19:37:57.103756 I | etcdserver: member dir = etcd144663324/member
+2018-10-01 19:37:57.103762 I | etcdserver: heartbeat = 100ms
+2018-10-01 19:37:57.103767 I | etcdserver: election = 1000ms
+2018-10-01 19:37:57.103772 I | etcdserver: snapshot count = 100000
+2018-10-01 19:37:57.103785 I | etcdserver: advertise client URLs = http://localhost:4001
+2018-10-01 19:37:57.103792 I | etcdserver: initial advertise peer URLs = http://localhost:7001
+2018-10-01 19:37:57.103804 I | etcdserver: initial cluster = etcd=http://localhost:7001
+2018-10-01 19:37:57.114104 I | etcdserver: starting member 7350a9cd4dc16f76 in cluster 266dcd0cf1a4334f
+2018-10-01 19:37:57.114134 I | raft: 7350a9cd4dc16f76 became follower at term 0
+2018-10-01 19:37:57.114141 I | raft: newRaft 7350a9cd4dc16f76 [peers: [], term: 0, commit: 0, applied: 0, lastindex: 0, lastterm: 0]
+2018-10-01 19:37:57.114146 I | raft: 7350a9cd4dc16f76 became follower at term 1
+2018-10-01 19:37:57.135230 W | auth: simple token is not cryptographically signed
+2018-10-01 19:37:57.138675 I | etcdserver: starting server... [version: 3.2.24, cluster version: to_be_decided]
+I1001 19:37:57.139061   22472 util.go:44] Running readiness check for service "etcd"
+2018-10-01 19:37:57.139109 I | etcdserver: 7350a9cd4dc16f76 as single-node; fast-forwarding 9 ticks (election ticks 10)
+2018-10-01 19:37:57.139434 I | etcdserver/membership: added member 7350a9cd4dc16f76 [http://localhost:7001] to cluster 266dcd0cf1a4334f
+2018-10-01 19:37:57.714470 I | raft: 7350a9cd4dc16f76 is starting a new election at term 1
+2018-10-01 19:37:57.714646 I | raft: 7350a9cd4dc16f76 became candidate at term 2
+2018-10-01 19:37:57.714701 I | raft: 7350a9cd4dc16f76 received MsgVoteResp from 7350a9cd4dc16f76 at term 2
+2018-10-01 19:37:57.714750 I | raft: 7350a9cd4dc16f76 became leader at term 2
+2018-10-01 19:37:57.714787 I | raft: raft.node: 7350a9cd4dc16f76 elected leader 7350a9cd4dc16f76 at term 2
+2018-10-01 19:37:57.715246 I | etcdserver: setting up the initial cluster version to 3.2
+2018-10-01 19:37:57.716403 N | etcdserver/membership: set the initial cluster version to 3.2
+2018-10-01 19:37:57.716493 I | etcdserver: published {Name:etcd ClientURLs:[http://localhost:4001]} to cluster 266dcd0cf1a4334f
+2018-10-01 19:37:57.716578 I | etcdserver/api: enabled capabilities for version 3.2
+I1001 19:37:58.140420   22472 internal_services.go:125] Starting API server
+I1001 19:37:58.140826   22472 util.go:44] Running readiness check for service "apiserver"

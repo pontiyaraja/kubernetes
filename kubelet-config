@@ -1,0 +1,73 @@
+address: 0.0.0.0
+apiVersion: kubelet.config.k8s.io/v1beta1
+authentication:
+  anonymous:
+    enabled: true
+  webhook:
+    cacheTTL: 2m0s
+    enabled: false
+  x509: {}
+authorization:
+  mode: AlwaysAllow
+  webhook:
+    cacheAuthorizedTTL: 5m0s
+    cacheUnauthorizedTTL: 30s
+cgroupDriver: cgroupfs
+cgroupRoot: /
+cgroupsPerQOS: true
+configMapAndSecretChangeDetectionStrategy: Watch
+containerLogMaxFiles: 5
+containerLogMaxSize: 10Mi
+contentType: application/vnd.kubernetes.protobuf
+cpuCFSQuota: true
+cpuCFSQuotaPeriod: 100ms
+cpuManagerPolicy: none
+cpuManagerReconcilePeriod: 10s
+enableControllerAttachDetach: true
+enableDebuggingHandlers: true
+enforceNodeAllocatable:
+- pods
+eventBurst: 10
+eventRecordQPS: 5
+evictionHard:
+  memory.available: 250Mi
+  nodefs.available: 10%
+  nodefs.inodesFree: 5%
+evictionMinimumReclaim:
+  nodefs.available: 5%
+  nodefs.inodesFree: 5%
+evictionPressureTransitionPeriod: 30s
+failSwapOn: true
+fileCheckFrequency: 10s
+hairpinMode: promiscuous-bridge
+healthzBindAddress: 127.0.0.1
+healthzPort: 10248
+httpCheckFrequency: 20s
+imageGCHighThresholdPercent: 85
+imageGCLowThresholdPercent: 80
+imageMinimumGCAge: 2m0s
+iptablesDropBit: 15
+iptablesMasqueradeBit: 14
+kind: KubeletConfiguration
+kubeAPIBurst: 10
+kubeAPIQPS: 5
+kubeletCgroups: /kubelet.slice
+makeIPTablesUtilChains: true
+maxOpenFiles: 1000000
+maxPods: 110
+nodeLeaseDurationSeconds: 40
+nodeStatusUpdateFrequency: 10s
+oomScoreAdj: -999
+podCIDR: 10.100.0.0/24
+podPidsLimit: -1
+port: 10250
+readOnlyPort: 10255
+registryBurst: 10
+registryPullQPS: 5
+resolvConf: /etc/resolv.conf
+runtimeRequestTimeout: 2m0s
+serializeImagePulls: false
+staticPodPath: /home/globant/go/src/github.com/pontiyaraja/kubernetes/static-pods216359548
+streamingConnectionIdleTimeout: 4h0m0s
+syncFrequency: 1m0s
+volumeStatsAggPeriod: 10s

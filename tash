@@ -1,0 +1,69 @@
+[1mdiff --git a/test/e2e/common/runtime.go b/test/e2e/common/runtime.go[m
+[1mindex 52663fa..f71b61f 100644[m
+[1m--- a/test/e2e/common/runtime.go[m
+[1m+++ b/test/e2e/common/runtime.go[m
+[36m@@ -140,9 +140,9 @@[m [mwhile true; do sleep 1; done[m
+ 				{[m
+ 					name: "if TerminationMessagePath is set [NodeConformance]",[m
+ 					container: v1.Container{[m
+[31m-						Image:   framework.BusyBoxImage,[m
+[31m-						Command: []string{"/bin/sh", "-c"},[m
+[31m-						Args:    []string{"/bin/echo -n DONE > /dev/termination-log"},[m
+[32m+[m						[32mImage:                  framework.BusyBoxImage,[m
+[32m+[m						[32mCommand:                []string{"/bin/sh", "-c"},[m
+[32m+[m						[32mArgs:                   []string{"/bin/echo -n DONE > /dev/termination-log"},[m
+ 						TerminationMessagePath: "/dev/termination-log",[m
+ 						SecurityContext: &v1.SecurityContext{[m
+ 							RunAsUser: &rootUser,[m
+[36m@@ -155,9 +155,9 @@[m [mwhile true; do sleep 1; done[m
+ 				{[m
+ 					name: "if TerminationMessagePath is set as non-root user and at a non-default path [NodeConformance]",[m
+ 					container: v1.Container{[m
+[31m-						Image:   framework.BusyBoxImage,[m
+[31m-						Command: []string{"/bin/sh", "-c"},[m
+[31m-						Args:    []string{"/bin/echo -n DONE > /dev/termination-custom-log"},[m
+[32m+[m						[32mImage:                  framework.BusyBoxImage,[m
+[32m+[m						[32mCommand:                []string{"/bin/sh", "-c"},[m
+[32m+[m						[32mArgs:                   []string{"/bin/echo -n DONE > /dev/termination-custom-log"},[m
+ 						TerminationMessagePath: "/dev/termination-custom-log",[m
+ 						SecurityContext: &v1.SecurityContext{[m
+ 							RunAsUser: &nonRootUser,[m
+[36m@@ -170,9 +170,9 @@[m [mwhile true; do sleep 1; done[m
+ 				{[m
+ 					name: "from log output if TerminationMessagePolicy FallbackToLogOnError is set [NodeConformance]",[m
+ 					container: v1.Container{[m
+[31m-						Image:   framework.BusyBoxImage,[m
+[31m-						Command: []string{"/bin/sh", "-c"},[m
+[31m-						Args:    []string{"/bin/echo -n DONE; /bin/false"},[m
+[32m+[m						[32mImage:                    framework.BusyBoxImage,[m
+[32m+[m						[32mCommand:                  []string{"/bin/sh", "-c"},[m
+[32m+[m						[32mArgs:                     []string{"/bin/echo -n DONE; /bin/false"},[m
+ 						TerminationMessagePath:   "/dev/termination-log",[m
+ 						TerminationMessagePolicy: v1.TerminationMessageFallbackToLogsOnError,[m
+ 					},[m
+[36m@@ -183,9 +183,9 @@[m [mwhile true; do sleep 1; done[m
+ 				{[m
+ 					name: "as empty when pod succeeds and TerminationMessagePolicy FallbackToLogOnError is set [NodeConformance]",[m
+ 					container: v1.Container{[m
+[31m-						Image:   framework.BusyBoxImage,[m
+[31m-						Command: []string{"/bin/sh", "-c"},[m
+[31m-						Args:    []string{"/bin/echo DONE; /bin/true"},[m
+[32m+[m						[32mImage:                    framework.BusyBoxImage,[m
+[32m+[m						[32mCommand:                  []string{"/bin/sh", "-c"},[m
+[32m+[m						[32mArgs:                     []string{"/bin/echo DONE; /bin/true"},[m
+ 						TerminationMessagePath:   "/dev/termination-log",[m
+ 						TerminationMessagePolicy: v1.TerminationMessageFallbackToLogsOnError,[m
+ 					},[m
+[36m@@ -196,9 +196,9 @@[m [mwhile true; do sleep 1; done[m
+ 				{[m
+ 					name: "from file when pod succeeds and TerminationMessagePolicy FallbackToLogOnError is set [NodeConformance]",[m
+ 					container: v1.Container{[m
+[31m-						Image:   framework.BusyBoxImage,[m
+[31m-						Command: []string{"/bin/sh", "-c"},[m
+[31m-						Args:    []string{"/bin/echo -n OK > /dev/termination-log; /bin/echo DONE; /bin/true"},[m
+[32m+[m						[32mImage:                    framework.BusyBoxImage,[m
+[32m+[m						[32mCommand:                  []string{"/bin/sh", "-c"},[m
+[32m+[m						[32mArgs:                     []string{"/bin/echo -n OK > /dev/termination-log; /bin/echo DONE; /bin/true"},[m
+ 						TerminationMessagePath:   "/dev/termination-log",[m
+ 						TerminationMessagePolicy: v1.TerminationMessageFallbackToLogsOnError,[m
+ 					},[m
