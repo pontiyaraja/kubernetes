@@ -1,0 +1,11 @@
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: static-pod-aba148d7-c70f-11e8-af47-54bf6401b4e5
+  namespace: e2e-tests-mirror-pod-8f5wm
+spec:
+  containers:
+  - name: test
+    image: docker.io/library/nginx:1.14-alpine
+    restartPolicy: Always
