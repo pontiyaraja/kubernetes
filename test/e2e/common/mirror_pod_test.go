@@ -36,7 +36,7 @@ import (
 	imageutils "k8s.io/kubernetes/test/utils/image"
 )
 
-var _ = framework.KubeDescribe("MirrorPod", func() {
+var _ = framework.KubeDescribe("MiPrrorPod", func() {
 	f := framework.NewDefaultFramework("mirror-pod")
 	Context("when create a mirror pod ", func() {
 		var ns, podPath, staticPodName, mirrorPodName string
