@@ -224,3 +224,27 @@ var _ = SIGDescribe("Pods Extended", func() {
 		})
 	})
 })
+
+// newLimitRange returns a limit range with specified data
+func newLimitRange(name string, limitType v1.LimitType,
+	min, max,
+	defaultLimit, defaultRequest,
+	maxLimitRequestRatio v1.ResourceList) *v1.LimitRange {
+	return &v1.LimitRange{
+		ObjectMeta: metav1.ObjectMeta{
+			Name: name,
+		},
+		Spec: v1.LimitRangeSpec{
+			Limits: []v1.LimitRangeItem{
+				{
+					Type:                 limitType,
+					Min:                  min,
+					Max:                  max,
+					Default:              defaultLimit,
+					DefaultRequest:       defaultRequest,
+					MaxLimitRequestRatio: maxLimitRequestRatio,
+				},
+			},
+		},
+	}
+}
