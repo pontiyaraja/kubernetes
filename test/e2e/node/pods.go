@@ -248,3 +248,17 @@ func newLimitRange(name string, limitType v1.LimitType,
 		},
 	}
 }
+
+func getResourceList(cpu, memory string, ephemeralStorage string) v1.ResourceList {
+	res := v1.ResourceList{}
+	if cpu != "" {
+		res[v1.ResourceCPU] = resource.MustParse(cpu)
+	}
+	if memory != "" {
+		res[v1.ResourceMemory] = resource.MustParse(memory)
+	}
+	if ephemeralStorage != "" {
+		res[v1.ResourceEphemeralStorage] = resource.MustParse(ephemeralStorage)
+	}
+	return res
+}
