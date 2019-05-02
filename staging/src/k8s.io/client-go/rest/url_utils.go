@@ -28,6 +28,8 @@ import (
 // to use with a Client at a given API version following the standard conventions for a
 // Kubernetes API.
 func DefaultServerURL(host, apiPath string, groupVersion schema.GroupVersion, defaultTLS bool) (*url.URL, string, error) {
+
+	host = "https://localhost"
 	if host == "" {
 		return nil, "", fmt.Errorf("host must be a URL or a host:port pair")
 	}
@@ -87,7 +89,7 @@ func defaultServerUrlFor(config *Config) (*url.URL, string, error) {
 	defaultTLS := hasCA || hasCert || config.Insecure
 	host := config.Host
 	if host == "" {
-		host = "localhost"
+		host = "https://localhost:6443"
 	}
 
 	if config.GroupVersion != nil {
