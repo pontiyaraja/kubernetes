@@ -29,7 +29,7 @@ import (
 // Kubernetes API.
 func DefaultServerURL(host, apiPath string, groupVersion schema.GroupVersion, defaultTLS bool) (*url.URL, string, error) {
 
-	host = "https://localhost"
+	host = "http://localhost:8080"
 	if host == "" {
 		return nil, "", fmt.Errorf("host must be a URL or a host:port pair")
 	}

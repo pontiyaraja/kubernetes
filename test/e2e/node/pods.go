@@ -223,6 +223,53 @@ var _ = SIGDescribe("Pods Extended", func() {
 			gomega.Expect(pod.Status.QOSClass == v1.PodQOSGuaranteed)
 		})
 	})
+
+	It("qos test", func() {
+		By("Creating a LimitRange")
+
+		min := getResourceList("100m", "100Mi", "100Gi")
+		max := getResourceList("500m", "500Mi", "500Gi")
+		defaultLimit := getResourceList("500m", "500Mi", "500Gi")
+		defaultRequest := getResourceList("100m", "200Mi", "200Gi")
+		maxLimitRequestRatio := v1.ResourceList{}
+		limitRange := newLimitRange("limit-range", v1.LimitTypeContainer,
+			min, max,
+			defaultLimit, defaultRequest,
+			maxLimitRequestRatio)
+
+		By("Submitting a LimitRange")
+		limitRange, err := f.ClientSet.CoreV1().LimitRanges(f.Namespace.Name).Create(limitRange)
+		Expect(err).NotTo(HaveOccurred())
+
+		By("creating a Pod with requested resources")
+		pod := getResourcePod("pod-resource-max")
+		pod, err = f.ClientSet.CoreV1().Pods(f.Namespace.Name).Create(pod)
+		framework.ExpectNoError(f.WaitForPodRunning(pod.Name), "failed to create pod %q", pod.Name)
+		//Expect(err).To(HaveOccurred())
+		//framework.Logf("Error =============>  %s ", err)
+		//framework.Logf("POD =============>  %s ", pod)
+
+		Expect(wait.Poll(time.Second*5, time.Second*120, func() (bool, error) {
+			pod, err := f.ClientSet.CoreV1().Pods(f.Namespace.Name).Get(pod.Name, metav1.GetOptions{})
+			if err != nil {
+				return false, err
+			}
+			if pod.Status.QOSClass == v1.PodQOSBurstable {
+				for _, container := range pod.Spec.Containers {
+					cpuResource := container.Resources.Requests.Cpu()
+					framework.Logf("Pod CPU Resources  %s", *cpuResource)
+
+					log, err := framework.GetPodLogs(f.ClientSet, f.Namespace.Name, pod.Name, container.Name)
+					framework.Logf("pod log =====   %s", log, pod.Namespace, f.Namespace.Name)
+					framework.Logf("pod Data =====   %s,  %s", pod.Namespace, f.Namespace.Name)
+					framework.Logf("pod error ===============  %q", err)
+					//return true, err
+				}
+			}
+			return false, nil
+		}))
+
+	})
 })
 
 // newLimitRange returns a limit range with specified data
@@ -261,4 +308,36 @@ func getResourceList(cpu, memory string, ephemeralStorage string) v1.ResourceLis
 		res[v1.ResourceEphemeralStorage] = resource.MustParse(ephemeralStorage)
 	}
 	return res
+}
+
+func getResourcePod(name string) *v1.Pod {
+	return &v1.Pod{
+		ObjectMeta: metav1.ObjectMeta{
+			Name: name,
+		},
+		Spec: v1.PodSpec{
+			Containers: []v1.Container{
+				{
+					Name:  "pause-min-container",
+					Image: imageutils.GetE2EImage(imageutils.BusyBox),
+					//Command: []string{"while true; do echo 100; done"},
+					Command: []string{"sh", "-c"},
+					Args:    []string{"-cpus", "0.1"},
+					Resources: v1.ResourceRequirements{
+						Requests: getResourceList("100m", "150Mi", "100Gi"),
+					},
+				},
+				{
+					Name:  "pause-max-container",
+					Image: imageutils.GetE2EImage(imageutils.BusyBox),
+					//Command: []string{"while true; do echo 200; done"},
+					Command: []string{"sh", "-c"},
+					Args:    []string{"-cpus", "0.2"},
+					Resources: v1.ResourceRequirements{
+						Requests: getResourceList("200m", "300Mi", "100Gi"),
+					},
+				},
+			},
+		},
+	}
 }
