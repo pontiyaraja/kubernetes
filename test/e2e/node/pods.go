@@ -247,7 +247,7 @@ var _ = SIGDescribe("Pods Extended", func() {
 		framework.ExpectNoError(f.WaitForPodRunning(pod.Name), "failed to create pod %q", pod.Name)
 		//Expect(err).To(HaveOccurred())
 		//framework.Logf("Error =============>  %s ", err)
-		//framework.Logf("POD =============>  %s ", pod)
+		framework.Logf("NODE NAME =============>  %s ", pod.Spec.NodeName)
 
 		Expect(wait.Poll(time.Second*5, time.Second*120, func() (bool, error) {
 			pod, err := f.ClientSet.CoreV1().Pods(f.Namespace.Name).Get(pod.Name, metav1.GetOptions{})
@@ -258,6 +258,8 @@ var _ = SIGDescribe("Pods Extended", func() {
 				for _, container := range pod.Spec.Containers {
 					cpuResource := container.Resources.Requests.Cpu()
 					framework.Logf("Pod CPU Resources  %s", *cpuResource)
+
+					framework.Logf("NODE NAME =============>  %s ", pod.Spec.NodeName)
 
 					log, err := framework.GetPodLogs(f.ClientSet, f.Namespace.Name, pod.Name, container.Name)
 					framework.Logf("pod log =====   %s", log, pod.Namespace, f.Namespace.Name)
@@ -322,7 +324,7 @@ func getResourcePod(name string) *v1.Pod {
 					Image: imageutils.GetE2EImage(imageutils.BusyBox),
 					//Command: []string{"while true; do echo 100; done"},
 					Command: []string{"sh", "-c"},
-					Args:    []string{"-cpus", "0.1"},
+					Args:    []string{"-cpus", "0.2"},
 					Resources: v1.ResourceRequirements{
 						Requests: getResourceList("100m", "150Mi", "100Gi"),
 					},
@@ -332,7 +334,7 @@ func getResourcePod(name string) *v1.Pod {
 					Image: imageutils.GetE2EImage(imageutils.BusyBox),
 					//Command: []string{"while true; do echo 200; done"},
 					Command: []string{"sh", "-c"},
-					Args:    []string{"-cpus", "0.2"},
+					Args:    []string{"-cpus", "0.4"},
 					Resources: v1.ResourceRequirements{
 						Requests: getResourceList("200m", "300Mi", "100Gi"),
 					},
