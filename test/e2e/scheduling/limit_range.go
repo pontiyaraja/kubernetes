@@ -158,12 +158,7 @@ var _ = SIGDescribe("LimitRange", func() {
 		ginkgo.By("Failing to create a Pod with more than max resources")
 		pod = f.NewTestPod(podName, getResourceList("600m", "600Mi", "600Gi"), v1.ResourceList{})
 		pod, err = f.ClientSet.CoreV1().Pods(f.Namespace.Name).Create(pod)
-<<<<<<< HEAD
 		framework.ExpectError(err)
-=======
-		framework.Logf("Limit range error ----------------- > ", err)
-		Expect(err).To(HaveOccurred())
->>>>>>> added hack
 
 		ginkgo.By("Deleting a LimitRange")
 		err = f.ClientSet.CoreV1().LimitRanges(f.Namespace.Name).Delete(limitRange.Name, metav1.NewDeleteOptions(30))

@@ -224,8 +224,8 @@ var _ = SIGDescribe("Pods Extended", func() {
 		})
 	})
 
-	It("qos test", func() {
-		By("Creating a LimitRange")
+	ginkgo.It("qos test", func() {
+		ginkgo.By("Creating a LimitRange")
 
 		min := getResourceList("100m", "100Mi", "100Gi")
 		max := getResourceList("500m", "500Mi", "500Gi")
@@ -237,19 +237,19 @@ var _ = SIGDescribe("Pods Extended", func() {
 			defaultLimit, defaultRequest,
 			maxLimitRequestRatio)
 
-		By("Submitting a LimitRange")
+		ginkgo.By("Submitting a LimitRange")
 		limitRange, err := f.ClientSet.CoreV1().LimitRanges(f.Namespace.Name).Create(limitRange)
-		Expect(err).NotTo(HaveOccurred())
+		gomega.Expect(err).NotTo(gomega.HaveOccurred())
 
-		By("creating a Pod with requested resources")
-		pod := getResourcePod("pod-resource-max")
+		ginkgo.By("creating a Pod with requested resources")
+		pod := getCPUSpikeResourcePod("pod-resource-max")
 		pod, err = f.ClientSet.CoreV1().Pods(f.Namespace.Name).Create(pod)
 		framework.ExpectNoError(f.WaitForPodRunning(pod.Name), "failed to create pod %q", pod.Name)
 		//Expect(err).To(HaveOccurred())
 		//framework.Logf("Error =============>  %s ", err)
 		framework.Logf("NODE NAME =============>  %s ", pod.Spec.NodeName)
 
-		Expect(wait.Poll(time.Second*5, time.Second*120, func() (bool, error) {
+		gomega.Expect(wait.Poll(time.Second*5, time.Second*120, func() (bool, error) {
 			pod, err := f.ClientSet.CoreV1().Pods(f.Namespace.Name).Get(pod.Name, metav1.GetOptions{})
 			if err != nil {
 				return false, err
@@ -312,7 +312,7 @@ func getResourceList(cpu, memory string, ephemeralStorage string) v1.ResourceLis
 	return res
 }
 
-func getResourcePod(name string) *v1.Pod {
+func getCPUSpikeResourcePod(name string) *v1.Pod {
 	return &v1.Pod{
 		ObjectMeta: metav1.ObjectMeta{
 			Name: name,
